@@ -52,7 +52,7 @@ const About = () => {
             {/* Image Container */}
             <div className="aspect-square rounded-2xl overflow-hidden border border-purple-500/30 transition-all duration-500 transform group-hover:scale-105 group-hover:shadow-lg">
               <img
-                src="src/components/shobhit_image.jpg"
+                src="/shobhit_image.jpg"
                 alt="Professional developer workspace"
                 className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
