@@ -14,7 +14,7 @@ const Hero = () => {
         "Hi, I am Shobhit Gupta.",
         "I build things for the web.",
         "Let's create something amazing.",
-        "Hi, I am Shobhit Guptaa.",
+        "Hi, I am Shobhit Gupta.",
       ],
       typeSpeed: 60,
       backSpeed: 40,
