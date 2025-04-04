@@ -1,188 +1,102 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Typed from 'typed.js';
-import { motion } from 'framer-motion';
-import {
-  Code,
-  Monitor,
-  Cpu,
-  Terminal,
-  Database,
-  Settings,
-  BrainCircuit,
-  Brackets,
-  MousePointer,
-  ShieldCheck,
-  Lightbulb,
-  Coffee,
-  Palette
-} from 'lucide-react';
-
-const colors = [
-  { name: "Purple", value: "rgba(168, 85, 247, 0.2)" },
-  { name: "Blue", value: "rgba(37, 99, 235, 0.2)" },
-  { name: "Green", value: "rgba(16, 185, 129, 0.2)" },
-  { name: "Red", value: "rgba(239, 68, 68, 0.2)" },
-  { name: "Orange", value: "rgba(249, 115, 22, 0.2)" },
-  { name: "Pink", value: "rgba(219, 39, 119, 0.2)" },
-  { name: "Yellow", value: "rgba(234, 179, 8, 0.2)" },
-];
+import React, { useEffect, useRef, useState } from "react";
+import Typed from "typed.js";
+import { motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 
 const Hero = () => {
   const typedRef = useRef(null);
-  const [bgColor, setBgColor] = useState(colors[0].value);
-  const [showPalette, setShowPalette] = useState(false);
+  const cursorRef = useRef<HTMLSpanElement | null>(null);
   const [typingComplete, setTypingComplete] = useState(false);
 
   useEffect(() => {
     const typed = new Typed(typedRef.current, {
       strings: [
-        'Hi, I am Shobhit Gupta',
-        'I am a Software Developer',
-        'I build things for the web',
-        'Hi, I am Shobhit Gupta'
+        "Hi, I am Shobhit Gupta.",
+        "I build things for the web.",
+        "Let's create something amazing.",
+        "Hi, I am Shobhit Guptaa.",
       ],
-      typeSpeed: 50,
-      backSpeed: 30,
-      showCursor: false,
+      typeSpeed: 60,
+      backSpeed: 40,
       fadeOut: true,
+      showCursor: false,
       onComplete: () => setTypingComplete(true),
     });
 
     return () => typed.destroy();
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (cursorRef.current) {
+        cursorRef.current.classList.toggle("opacity-0");
+      }
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section
       id="home"
-      className="min-h-screen relative flex flex-col items-center justify-center overflow-hidden transition-colors duration-500 px-4"
-      style={{
-        background: `radial-gradient(circle at 50% 50%, ${bgColor}, transparent 70%)`
-      }}
+      className="relative flex flex-col items-center justify-center min-h-screen text-center px-6 bg-[#050505] overflow-hidden"
     >
-      {/* Typewriter Text (Only this moves) */}
+      {/* Holographic Effect - Changing Colors */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="relative z-10 text-center"
+        className="absolute inset-0 flex items-center justify-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 2 }}
       >
-        <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-          <span ref={typedRef}></span>
-          {!typingComplete && (
-            <motion.span
-              className="text-purple-400"
-              animate={{ opacity: [1, 0, 1] }}
-              transition={{ duration: 0.8, repeat: Infinity }}
-            >
-              |
-            </motion.span>
-          )}
-        </h1>
+        <motion.div
+          className="absolute right-[-100px] top-1/3 h-[500px] w-[500px] rounded-full blur-[200px] opacity-50"
+          animate={{
+            rotate: [0, 360], // Continuous Rotation
+            background: [
+              "radial-gradient(circle, #007cf0, #00dfd8)",
+              "radial-gradient(circle, #7928ca, #ff0080)",
+              "radial-gradient(circle, #ff4d4d, #f9cb28)",
+              "radial-gradient(circle, #00c6ff, #0072ff)",
+              "radial-gradient(circle, #ff6a00, #ee0979)"
+            ]
+          }}
+          transition={{
+            rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+            background: { duration: 8, repeat: Infinity, ease: "easeInOut" }
+          }}
+        />
       </motion.div>
 
-      {/* Bullet Points Below Name (Static) */}
-      <ul className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-8 space-y-2 opacity-90 hover:opacity-100 transition-opacity duration-300 text-left">
-        <li>🚀 Passionate about creating elegant solutions to complex problems</li>
-        <li>💡 Always learning and exploring new technologies</li>
-        <li>💻 Experienced in full-stack web development</li>
-        <li>🎯 Focused on writing clean, maintainable code</li>
-      </ul>
 
-      {/* Buttons Container (Static) */}
-      <div className="relative z-10 flex gap-4 mt-4">
+      {/* Main Content */}
+      <div className="relative z-10 flex flex-col items-center">
+        <h1 className="text-5xl md:text-7xl font-semibold text-white leading-tight min-h-[90px] flex">
+          <span ref={typedRef}></span>
+          <span ref={cursorRef} className="text-white ml-1">|</span>
+        </h1>
+
+        <p className="text-xl md:text-2xl text-gray-400 mt-4 max-w-2xl">
+          Crafting seamless digital experiences with modern technology.
+        </p>
+
         <motion.a
           href="#projects"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="inline-block border-2 px-8 py-3 rounded-full font-medium transition-all duration-300"
-          style={{
-            borderColor: bgColor.replace("0.2", "1"), // Full opacity for border
-            color: bgColor.replace("0.2", "1"), // Text matches the selected color
-          }}
-          onMouseEnter={(e) => {
-            const target = e.target as HTMLElement;
-            target.style.backgroundColor = bgColor.replace("0.2", "1"); // Full opacity on hover
-            target.style.color = "#fff"; // White text on hover
-          }}
-          onMouseLeave={(e) => {
-            const target = e.target as HTMLElement;
-            target.style.backgroundColor = "transparent"; // Reset to transparent
-            target.style.color = bgColor.replace("0.2", "1"); // Restore text color
-          }}
+          className="inline-block mt-8 px-8 py-3 text-lg font-medium text-white border border-gray-600 rounded-full transition hover:bg-white hover:text-black"
         >
           View My Work
         </motion.a>
-
-        {/* Color Palette Button */}
-        <div className="relative">
-          <button
-            onClick={() => setShowPalette(!showPalette)}
-            className="flex items-center gap-2 bg-gray-800 text-white px-4 py-3 rounded-full shadow-lg hover:bg-gray-700 transition"
-          >
-            <Palette className="w-5 h-5" /> Change Background
-          </button>
-
-          {/* Color Palette Selection */}
-          {showPalette && (
-            <div className="absolute mt-2 bg-black/90 p-3 rounded-lg shadow-lg grid grid-cols-4 gap-2">
-              {colors.map((color, index) => (
-                <button
-                  key={index}
-                  onClick={() => {
-                    setBgColor(color.value); // Change background color
-                    setShowPalette(false); // Hide palette after selecting
-                  }}
-                  className="w-8 h-8 rounded-full border-2"
-                  style={{ backgroundColor: color.value }}
-                />
-              ))}
-            </div>
-          )}
-        </div>
       </div>
 
-      {/* Floating Icons - Evenly Spaced */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[
-          { icon: <Code />, top: '5%', left: '10%' },
-          { icon: <Monitor />, top: '5%', left: '40%' },
-          { icon: <Cpu />, top: '5%', left: '70%' },
-
-          { icon: <Terminal />, top: '30%', left: '5%' },
-          { icon: <Database />, top: '30%', left: '35%' },
-          { icon: <Settings />, top: '30%', left: '65%' },
-          { icon: <BrainCircuit />, top: '30%', left: '90%' },
-
-          { icon: <Brackets />, top: '55%', left: '10%' },
-          { icon: <MousePointer />, top: '55%', left: '40%' },
-          { icon: <ShieldCheck />, top: '55%', left: '70%' },
-
-          { icon: <Lightbulb />, top: '80%', left: '5%' },
-          { icon: <Coffee />, top: '80%', left: '35%' },
-          { icon: <Cpu />, top: '80%', left: '65%' },
-          { icon: <Monitor />, top: '80%', left: '90%' },
-        ].map((doodle, i) => (
-          <motion.div
-            key={i}
-            className="absolute text-purple-300 opacity-60"
-            style={{
-              top: doodle.top,
-              left: doodle.left,
-              fontSize: '4rem',
-              filter: 'drop-shadow(0px 0px 20px rgba(168, 85, 247, 1))',
-            }}
-            initial={{ y: 0, rotate: 0 }}
-            animate={{ y: [0, -20, 0], rotate: [0, 5, -5, 0] }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          >
-            {doodle.icon}
-          </motion.div>
-        ))}
-      </div>
+      {/* Scroll Down Animation */}
+      <motion.div
+        className="absolute bottom-10 flex flex-col items-center text-gray-400"
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <p className="text-sm md:text-base">Scroll Down</p>
+        <ChevronDown className="w-6 h-6 mt-1" />
+      </motion.div>
     </section>
   );
 };
