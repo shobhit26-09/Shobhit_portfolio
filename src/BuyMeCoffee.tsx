@@ -3,7 +3,7 @@ import React from "react";
 const BuyMeCoffee = () => {
   return (
     <a
-      href="https://www.buymeacoffee.com/shobhitgupta26" // Replace with your link
+      href="https://www.buymeacoffee.com/shobhitgupta26" 
       target="_blank"
       rel="noopener noreferrer"
       className="
