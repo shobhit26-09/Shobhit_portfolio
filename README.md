@@ -1,6 +1,6 @@
 # 🌟 Shobhit Gupta | Full-Stack Web Developer Portfolio  
 
-![Portfolio Hero Screenshot](https://i.imgur.com/lF7gMmi.png)  
+![Portfolio Hero Screenshot](https://imagizer.imageshack.com/img923/1005/99DQgI.png)  
 
 Welcome to my **digital playground** — a curated showcase of innovation, creativity, and expertise.  
 I’m **Shobhit Gupta**, a passionate **Full-Stack Developer** dedicated to crafting seamless, performant, and beautiful web experiences.  
