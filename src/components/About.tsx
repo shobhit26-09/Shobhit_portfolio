@@ -112,7 +112,7 @@ const About = () => {
           >
             <div className="relative aspect-square overflow-hidden rounded-xl shadow-lg shadow-black/30">
               <motion.img
-                src="/shobhit_image.jpg"
+                src="https://imagizer.imageshack.com/img923/2084/hFDfho.jpg"
                 alt="Shobhit Gupta"
                 className="w-full h-full object-cover rounded-xl"
                 whileHover={{ scale: 1.04 }}
