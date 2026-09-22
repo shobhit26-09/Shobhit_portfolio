@@ -19,6 +19,7 @@ import './index.css';
 type Brand = { title:string; path:string; hex?:string };
 const linkedIn:Brand = {title:'LinkedIn',path:'M4.98 3.5C4.98 4.88 3.87 6 2.5 6S.02 4.88.02 3.5 1.13 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V24h-4V8zm7 0h3.83v2.19h.05C11.91 9.18 13.22 7.5 16 7.5c4.95 0 5.86 3.26 5.86 7.49V24h-4v-7.99c0-1.91-.04-4.36-2.66-4.36-2.66 0-3.07 2.08-3.07 4.22V24h-4V8z'};
 const resumeIcon:Brand = {title:'Resume',path:'M6 2h8l4 4v16H6V2zm8 1.5V7h3.5L14 3.5zM9 11v2h6v-2H9zm0 4v2h6v-2H9z'};
+const cssBrand:Brand = {...siCss, hex:'1572B6'};
 function BrandIcon({icon}:{icon:Brand}){return <svg className="brandIcon" style={{'--brand':`#${icon.hex || '29a36a'}`} as React.CSSProperties} role="img" aria-label={icon.title} viewBox="0 0 24 24"><path d={icon.path}/></svg>}
 function Skill({icon,label}:{icon:Brand,label:string}){return <span className="skillPill"><BrandIcon icon={icon}/>{label}</span>}
 
@@ -77,11 +78,11 @@ export default function App(){
     <section id="skills" className="skills reveal">
       <div className="sectionHead"><p>Skills &amp; tools</p><p>02</p></div>
       <div className="skillsIntro"><p className="eyebrow">What I work with</p><h2>Built for the browser.<br/><em>Ready for the whole stack.</em></h2></div>
-      <div className="skillCloud" aria-hidden="true"><span><BrandIcon icon={siJavascript}/></span><span><BrandIcon icon={siReact}/></span><span><BrandIcon icon={siTypescript}/></span><span><BrandIcon icon={siGit}/></span><span><BrandIcon icon={siCss}/></span><span><BrandIcon icon={siNodedotjs}/></span><span><BrandIcon icon={siTailwindcss}/></span></div>
+      <div className="skillCloud" aria-hidden="true"><span><BrandIcon icon={siJavascript}/></span><span><BrandIcon icon={siReact}/></span><span><BrandIcon icon={siTypescript}/></span><span><BrandIcon icon={siGit}/></span><span><BrandIcon icon={cssBrand}/></span><span><BrandIcon icon={siNodedotjs}/></span><span><BrandIcon icon={siTailwindcss}/></span></div>
       <div className="skillGrid">
-        <article><h3>Frontend</h3><div><Skill icon={siReact} label="React"/><Skill icon={siJavascript} label="JavaScript"/><Skill icon={siTypescript} label="TypeScript"/><Skill icon={siHtml5} label="HTML"/><Skill icon={siCss} label="CSS"/></div></article>
+        <article><h3>Frontend</h3><div><Skill icon={siReact} label="React"/><Skill icon={siJavascript} label="JavaScript"/><Skill icon={siTypescript} label="TypeScript"/><Skill icon={siHtml5} label="HTML"/><Skill icon={cssBrand} label="CSS"/></div></article>
         <article><h3>Backend &amp; data</h3><div><Skill icon={siNodedotjs} label="Node.js"/><Skill icon={siExpress} label="Express"/><Skill icon={siMongodb} label="MongoDB"/><Skill icon={siPostgresql} label="PostgreSQL"/></div></article>
-        <article><h3>Styling</h3><div><Skill icon={siTailwindcss} label="Tailwind CSS"/><Skill icon={siCss} label="Responsive UI"/><Skill icon={siHtml5} label="Accessibility"/></div></article>
+        <article><h3>Styling</h3><div><Skill icon={siTailwindcss} label="Tailwind CSS"/><Skill icon={cssBrand} label="Responsive UI"/><Skill icon={siHtml5} label="Accessibility"/></div></article>
         <article><h3>Workflow</h3><div><Skill icon={siGit} label="Git"/><Skill icon={siGithub} label="GitHub"/><Skill icon={siVite} label="Vite"/><Skill icon={siNpm} label="npm"/><Skill icon={siNetlify} label="Netlify"/></div></article>
       </div>
     </section>
