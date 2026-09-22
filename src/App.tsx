@@ -12,7 +12,15 @@ import portrait from './shobhit.jpg';
 import flatlayLaptop from './flatlay-macbook.png';
 import flatlayHeadphones from './flatlay-headphones.png';
 import flatlayRuler from './flatlay-ruler.png';
+import { siReact, siJavascript, siTypescript, siHtml5, siCss, siNodedotjs, siExpress, siMongodb, siPostgresql, siTailwindcss, siGit, siGithub, siVite, siNpm, siNetlify, siLeetcode, siGmail } from 'simple-icons';
 import './index.css';
+
+
+type Brand = { title:string; path:string };
+const linkedIn:Brand = {title:'LinkedIn',path:'M4.98 3.5C4.98 4.88 3.87 6 2.5 6S.02 4.88.02 3.5 1.13 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V24h-4V8zm7 0h3.83v2.19h.05C11.91 9.18 13.22 7.5 16 7.5c4.95 0 5.86 3.26 5.86 7.49V24h-4v-7.99c0-1.91-.04-4.36-2.66-4.36-2.66 0-3.07 2.08-3.07 4.22V24h-4V8z'};
+const resumeIcon:Brand = {title:'Resume',path:'M6 2h8l4 4v16H6V2zm8 1.5V7h3.5L14 3.5zM9 11v2h6v-2H9zm0 4v2h6v-2H9z'};
+function BrandIcon({icon}:{icon:Brand}){return <svg className="brandIcon" role="img" aria-label={icon.title} viewBox="0 0 24 24"><path d={icon.path}/></svg>}
+function Skill({icon,label}:{icon:Brand,label:string}){return <span className="skillPill"><BrandIcon icon={icon}/>{label}</span>}
 
 const projects = [
   { n:'01', title:'StockSense', kind:'Market intelligence', copy:'A focused Indian equities workspace for signals, sectors, macro context and sourced market news.', stack:'React · TypeScript · Supabase', images:[stocksense,stocksenseA,stocksenseB], live:'https://stocksensee.netlify.app/', code:'https://github.com/shobhit26-09/StockSense' },
@@ -69,21 +77,21 @@ export default function App(){
     <section id="skills" className="skills reveal">
       <div className="sectionHead"><p>Skills &amp; tools</p><p>02</p></div>
       <div className="skillsIntro"><p className="eyebrow">What I work with</p><h2>Built for the browser.<br/><em>Ready for the whole stack.</em></h2></div>
-      <div className="skillCloud" aria-hidden="true"><span>JS</span><span>React</span><span>TS</span><span>Git</span><span>CSS</span></div>
+      <div className="skillCloud" aria-hidden="true"><span><BrandIcon icon={siJavascript}/></span><span><BrandIcon icon={siReact}/></span><span><BrandIcon icon={siTypescript}/></span><span><BrandIcon icon={siGit}/></span><span><BrandIcon icon={siCss}/></span></div>
       <div className="skillGrid">
-        <article><h3>Frontend</h3><div><span>React</span><span>JavaScript</span><span>TypeScript</span><span>HTML</span><span>CSS</span><span>Responsive UI</span></div></article>
-        <article><h3>Backend &amp; data</h3><div><span>Node.js</span><span>Express</span><span>MongoDB</span><span>PostgreSQL</span><span>REST APIs</span></div></article>
-        <article><h3>Styling</h3><div><span>Tailwind CSS</span><span>CSS Modules</span><span>UI systems</span><span>Accessibility</span></div></article>
-        <article><h3>Workflow</h3><div><span>Git</span><span>GitHub</span><span>Vite</span><span>npm</span><span>Netlify</span></div></article>
+        <article><h3>Frontend</h3><div><Skill icon={siReact} label="React"/><Skill icon={siJavascript} label="JavaScript"/><Skill icon={siTypescript} label="TypeScript"/><Skill icon={siHtml5} label="HTML"/><Skill icon={siCss} label="CSS"/></div></article>
+        <article><h3>Backend &amp; data</h3><div><Skill icon={siNodedotjs} label="Node.js"/><Skill icon={siExpress} label="Express"/><Skill icon={siMongodb} label="MongoDB"/><Skill icon={siPostgresql} label="PostgreSQL"/></div></article>
+        <article><h3>Styling</h3><div><Skill icon={siTailwindcss} label="Tailwind CSS"/><Skill icon={siCss} label="Responsive UI"/><Skill icon={siHtml5} label="Accessibility"/></div></article>
+        <article><h3>Workflow</h3><div><Skill icon={siGit} label="Git"/><Skill icon={siGithub} label="GitHub"/><Skill icon={siVite} label="Vite"/><Skill icon={siNpm} label="npm"/><Skill icon={siNetlify} label="Netlify"/></div></article>
       </div>
     </section>
     <section id="about" className="about aboutProfile reveal">
       <button className={'portraitWrap '+(portraitColor?'isColor':'')} onClick={()=>setPortraitColor(v=>!v)} aria-label="Toggle portrait color"><img src={portrait} alt="Shobhit Gupta"/><span>{portraitColor?'Color on':'Hover for color'}</span></button>
       <div className="aboutBody"><p className="eyebrow">About me</p><h2>Frontend instinct.<br/><em>Full-stack follow-through.</em></h2><div className="aboutGrid"><p>I’m Shobhit Gupta, a full-stack developer with a strong frontend core. I care about clear interfaces, responsive systems and shipping the whole product, not stopping at the screen.</p><p>My recent work spans live market data, global event monitoring and authenticated real-time multiplayer. I build with React and TypeScript on the client, then Node, Express, PostgreSQL and APIs behind it.</p></div></div>
     </section>
-    <section className="education reveal"><div className="sectionHead"><p>Education</p><p>01</p></div><div className="timeline"><span className="year">2021 — 2025</span><div><h3>Bachelor of Technology</h3><p>Computer Science · CGPA 7.8/10</p></div><div><h3>Jaypee University of Information Technology</h3><p>Solan, India</p></div></div></section>
+    <section className="education reveal"><div className="sectionHead"><p>Experience &amp; education</p><p>03</p></div><div className="timeline experienceRow"><span className="year">~6 months</span><div><h3>Software Developer (Contractor)</h3><p>Frontend and development tasks on tight deadlines</p></div><div><h3>Outlier</h3><p>~11 deadline projects · all accepted and paid</p></div></div><div className="timeline"><span className="year">2021 — 2025</span><div><h3>Bachelor of Technology</h3><p>Computer Science · CGPA 7.8/10</p></div><div><h3>Jaypee University of Information Technology</h3><p>Solan, India</p></div></div></section>
     <section className="contact" id="contact"><div className="contactGrid reveal">
-      <div className="contactIntro"><p className="eyebrow">Get in touch</p><h2>Let’s talk.</h2><p>Have a role, project or question? Send me a note and I’ll get back to you.</p><div className="contactRoutes"><a href="mailto:shobhitg947@gmail.com"><span>Mail</span>shobhitg947@gmail.com ↗</a><a href="https://www.linkedin.com/in/shobhit-gupta-867b12223/" target="_blank" rel="noreferrer"><span>LinkedIn</span>shobhit-gupta ↗</a></div></div>
+      <div className="contactIntro"><p className="eyebrow">Get in touch</p><h2>Let’s talk.</h2><p>Have a role, project or question? Send me a note and I’ll get back to you.</p><div className="contactRoutes"><a href="mailto:shobhitg947@gmail.com"><BrandIcon icon={siGmail}/><span><b>Mail</b>shobhitg947@gmail.com</span><i>↗</i></a><a href="https://github.com/shobhit26-09" target="_blank" rel="noreferrer"><BrandIcon icon={siGithub}/><span><b>GitHub</b>shobhit26-09</span><i>↗</i></a><a href="https://www.linkedin.com/in/shobhit-gupta-867b12223/" target="_blank" rel="noreferrer"><BrandIcon icon={linkedIn}/><span><b>LinkedIn</b>shobhit-gupta</span><i>↗</i></a><a href="https://leetcode.com/u/shobhitg947" target="_blank" rel="noreferrer"><BrandIcon icon={siLeetcode}/><span><b>LeetCode</b>shobhitg947</span><i>↗</i></a><a href="/Shobhit_Resume.pdf" target="_blank" rel="noreferrer"><BrandIcon icon={resumeIcon}/><span><b>Resume</b>View PDF</span><i>↗</i></a></div></div>
       {formSent?<div className="formSuccess" role="status"><b>Message sent.</b><p>Thanks — it’s on its way to Shobhit.</p><button onClick={()=>setFormSent(false)}>Send another</button></div>:<form className="messageForm" name="portfolio-contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?message=sent#contact" onSubmit={()=>setFormSent(true)}><input type="hidden" name="form-name" value="portfolio-contact"/><p className="hiddenField"><label>Don’t fill this out: <input name="bot-field"/></label></p><label>Your email<input type="email" name="email" autoComplete="email" placeholder="you@company.com" required/></label><label>Subject<input name="subject" placeholder="Role, project or question" required/></label><label>Message<textarea name="message" rows={6} placeholder="Tell me what you’re working on…" required/></label><button type="submit">Send message <span>↗</span></button></form>}
     </div></section>
    </main><footer><span>© 2026 Shobhit Gupta</span><a href="#top">Back to top ↑</a></footer>
