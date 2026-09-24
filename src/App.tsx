@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import stocksense from './stocksense-hero.png';
-import stocksenseA from './stocksense-a.png';
-import stocksenseB from './stocksense-b.png';
-import resumeA from './resumeai-a.png';
-import resumeB from './resumeai-b.png';
-import resumeC from './resumeai-c.png';
-import bluff from './bluff-hero.png';
-import bluffA from './bluff-a.png';
-import bluffB from './bluff-b.png';
+import ssHome from './shots/ss-home.webp';
+import ssMacro from './shots/ss-macro.webp';
+import ssSectors from './shots/ss-sectors.webp';
+import blSignin from './shots/bl-signin.webp';
+import blLobby from './shots/bl-lobby.webp';
+import raHome from './shots/ra-home.webp';
+import raTemplates from './shots/ra-templates.webp';
+import raFeatures from './shots/ra-features.webp';
+import outlierLogo from './logos/outlier.svg';
+import juitLogo from './logos/juit.png';
 import portrait from './shobhit.jpg';
 import flatlayLaptop from './flatlay-macbook.png';
 import flatlayHeadphones from './flatlay-headphones.png';
@@ -24,25 +25,35 @@ function BrandIcon({icon}:{icon:Brand}){return <svg className="brandIcon" style=
 function Skill({icon,label}:{icon:Brand,label:string}){return <span className="skillPill"><BrandIcon icon={icon}/>{label}</span>}
 
 const projects = [
-  { n:'01', title:'StockSense', kind:'Market intelligence', copy:'A focused Indian equities workspace for signals, sectors, macro context and sourced market news.', stack:'React · TypeScript · Supabase', images:[stocksense,stocksenseA,stocksenseB], live:'https://stocksensee.netlify.app/', code:'https://github.com/shobhit26-09/StockSense' },
-  { n:'02', title:'Bluff', kind:'Real-time multiplayer', copy:'A live card game built around deception, rooms and synchronized play across connected clients.', stack:'React · Express · Socket.IO · MongoDB', images:[bluff,bluffA,bluffB], live:'https://bluff-82py.onrender.com/', code:'https://github.com/shobhit26-09/bluff' },
-  { n:'03', title:'ResumeAI', kind:'AI resume builder', copy:'A TypeScript resume builder and analyzer for creating ATS-aware resumes with guided feedback and intelligent suggestions.', stack:'React · TypeScript · Tailwind · Clerk', images:[resumeA,resumeB,resumeC], live:'https://resumeai2.netlify.app/', code:'https://github.com/shobhit26-09/ResumeAI' },
+  { n:'01', title:'StockSense', kind:'Market intelligence', copy:'A focused Indian equities workspace for signals, sectors, macro context and sourced market news.', stack:['React','TypeScript','Supabase'], views:[{src:ssHome,label:'Dashboard'},{src:ssMacro,label:'World macro map'},{src:ssSectors,label:'Sector ideas'}], live:'https://stocksensee.netlify.app/', code:'https://github.com/shobhit26-09/StockSense' },
+  { n:'02', title:'Bluff', kind:'Real-time multiplayer', copy:'A live card game built around deception, private rooms and synchronized play across connected clients.', stack:['React','Express','Socket.IO','PostgreSQL'], views:[{src:blSignin,label:'Landing & sign-in'},{src:blLobby,label:'Game lobby'}], live:'https://bluff-82py.onrender.com/', code:'https://github.com/shobhit26-09/bluff' },
+  { n:'03', title:'ResumeAI', kind:'AI resume builder', copy:'A TypeScript resume builder and analyzer for creating ATS-aware resumes with guided feedback and intelligent suggestions.', stack:['React','TypeScript','Tailwind','Clerk'], views:[{src:raHome,label:'Home'},{src:raTemplates,label:'Template editor'},{src:raFeatures,label:'Features'}], live:'https://resumeai2.netlify.app/', code:'https://github.com/shobhit26-09/ResumeAI' },
 ];
 
 type Project = typeof projects[number];
-function ProjectWindow({p,index}:{p:Project,index:number}){
+const SLIDE_MS=5200;
+function CaseStudy({p}:{p:Project}){
  const [slide,setSlide]=useState(0);
- useEffect(()=>{const id=window.setInterval(()=>setSlide(v=>(v+1)%p.images.length),3600+index*450);return()=>clearInterval(id)},[p.images.length,index]);
- return <div className="projectStage reveal" style={{'--delay':`${index*80}ms`} as React.CSSProperties}>
-  <div className="browserWindow" data-parallax>
-   <div className="browserBar"><span className="traffic"><i/><i/><i/></span><span className="browserUrl"><b>⌘</b> {p.live.replace('https://','').replace('/','')}</span><span className="windowBadge">LIVE</span></div>
-   <a className="projectVisual" href={p.live} target="_blank" rel="noreferrer">
-    {p.images.map((im:string,i:number)=><img className={i===slide?'active':''} src={im} alt={`${p.title} interface view ${i+1}`} key={im}/>) }
-    <span className="open">Open project ↗</span>
+ const [paused,setPaused]=useState(false);
+ useEffect(()=>{if(paused)return;const id=window.setTimeout(()=>setSlide(v=>(v+1)%p.views.length),SLIDE_MS);return()=>clearTimeout(id)},[slide,paused,p.views.length]);
+ const host=p.live.replace('https://','').replace(/\/$/,'');
+ return <article className="caseStudy">
+  <div className="caseHead reveal"><span className="caseNum">{p.n}</span><span>{p.kind}</span></div>
+  <div className="caseFrame reveal" onMouseEnter={()=>setPaused(true)} onMouseLeave={()=>setPaused(false)}>
+   <div className="frameBar"><span className="lights" aria-hidden="true"><i/><i/><i/></span><span className="frameUrl"><svg viewBox="0 0 12 14" aria-hidden="true"><path d="M3 6V4a3 3 0 0 1 6 0v2h1v8H2V6h1zm1.5 0h3V4a1.5 1.5 0 0 0-3 0v2z"/></svg>{host}</span><span className="frameSpacer"/></div>
+   <a className="frameView" href={p.live} target="_blank" rel="noreferrer" aria-label={`Open ${p.title} live site`}>
+    {p.views.map((v,i)=><img className={i===slide?'active':''} src={v.src} alt={`${p.title} - ${v.label}`} width={1600} height={1000} loading={i===0?'eager':'lazy'} key={v.label}/>)}
+    <span className="frameOpen">Open live site ↗</span>
    </a>
-   <div className="slideDots" aria-label={`View ${slide+1} of ${p.images.length}`}>{p.images.map((_:string,i:number)=><button onClick={()=>setSlide(i)} className={i===slide?'active':''} aria-label={`Show image ${i+1}`} key={i}/>)}</div>
   </div>
- </div>
+  <div className="caseTabs reveal" role="tablist" style={{'--count':p.views.length} as React.CSSProperties}>
+   {p.views.map((v,i)=><button role="tab" aria-selected={i===slide} className={i===slide?'active':''} onClick={()=>setSlide(i)} key={v.label}><span className="tabTrack"><i key={i===slide?`on-${slide}`:'off'} className={paused?'paused':''}/></span>{v.label}</button>)}
+  </div>
+  <div className="caseBody reveal">
+   <div><h2>{p.title}</h2><p>{p.copy}</p></div>
+   <div className="caseSide"><ul className="stackChips">{p.stack.map(t=><li key={t}>{t}</li>)}</ul><div className="caseActions"><a className="btnPrimary" href={p.live} target="_blank" rel="noreferrer">Live site <span>↗</span></a><a className="btnGhost" href={p.code} target="_blank" rel="noreferrer">Source <span>↗</span></a></div></div>
+  </div>
+ </article>
 }
 
 export default function App(){
@@ -73,7 +84,7 @@ export default function App(){
       <div className="heroFoot reveal"><p>Complete web products, built from interface to API.</p><a href="#work">Selected work <span>↓</span></a></div>
     </section>
     <section id="work" className="work"><div className="sectionHead reveal"><p>Selected work</p><p>2026</p></div>
-      {projects.map((p,i)=><article className="project" key={p.title}><div className="projectMeta reveal"><span>{p.n}</span><span>{p.kind}</span></div><ProjectWindow p={p} index={i}/><div className="projectCopy reveal"><div><h2>{p.title}</h2><p>{p.copy}</p></div><div className="projectLinks"><span>{p.stack}</span><a href={p.code} target="_blank" rel="noreferrer">Source ↗</a></div></div></article>)}
+      {projects.map(p=><CaseStudy p={p} key={p.title}/>)}
     </section>
     <section id="skills" className="skills reveal">
       <div className="sectionHead"><p>Skills &amp; tools</p><p>02</p></div>
@@ -90,7 +101,28 @@ export default function App(){
       <button className={'portraitWrap '+(portraitColor?'isColor':'')} onClick={()=>setPortraitColor(v=>!v)} aria-label="Toggle portrait color"><img src={portrait} alt="Shobhit Gupta"/><span>{portraitColor?'Color on':'Hover for color'}</span></button>
       <div className="aboutBody"><p className="eyebrow">About me</p><h2>Frontend instinct.<br/><em>Full-stack follow-through.</em></h2><div className="aboutGrid"><p>I’m Shobhit Gupta, a full-stack developer with a strong frontend core. I care about clear interfaces, responsive systems and shipping the whole product, not stopping at the screen.</p><p>My recent work spans live market data, global event monitoring and authenticated real-time multiplayer. I build with React and TypeScript on the client, then Node, Express, PostgreSQL and APIs behind it.</p></div></div>
     </section>
-    <section className="education reveal"><div className="sectionHead"><p>Experience &amp; education</p><p>03</p></div><div className="timeline experienceRow"><span className="year">~6 months</span><div><h3>Software Developer (Contractor)</h3><p>Frontend and development tasks on tight deadlines</p></div><div><h3>Outlier</h3><p>~11 deadline projects · all accepted and paid</p></div></div><div className="timeline"><span className="year">2021 — 2025</span><div><h3>Bachelor of Technology</h3><p>Computer Science · CGPA 7.8/10</p></div><div><h3>Jaypee University of Information Technology</h3><p>Solan, India</p></div></div></section>
+    <section id="experience" className="journey">
+      <div className="sectionHead reveal"><p>Experience &amp; education</p><p>03</p></div>
+      <div className="journeyGrid">
+       <div className="journeyIntro reveal"><p className="eyebrow">Background</p><h2>Real deadlines.<br/><em>Solid foundations.</em></h2></div>
+       <ol className="journeyList">
+        <li className="journeyItem reveal"><span className="journeyNode" aria-hidden="true"/>
+         <article className="journeyCard">
+          <div className="jcTop"><span className="orgLogo orgDark"><img src={outlierLogo} alt="Outlier logo"/></span><div className="jcTitle"><p className="jcKind">Experience</p><h3>Software Developer (Contractor)</h3><p className="jcOrg">Outlier <i>·</i> Remote</p></div><span className="jcDate">Jun 2025 — Dec 2025</span></div>
+          <p className="jcDetail">Built UI components, site templates and code used to train and evaluate AI systems. Every project had a strict completion window, and all were accepted and paid.</p>
+          <div className="jcFoot"><div className="jcStats"><div><b>~11</b><span>projects delivered</span></div><div><b>6 mo</b><span>contract</span></div></div><ul className="jcChips"><li>React</li><li>TypeScript</li><li>JavaScript</li><li>HTML</li><li>CSS</li></ul></div>
+         </article>
+        </li>
+        <li className="journeyItem reveal"><span className="journeyNode" aria-hidden="true"/>
+         <article className="journeyCard">
+          <div className="jcTop"><span className="orgLogo orgCrest"><img src={juitLogo} alt="Jaypee University of Information Technology logo"/></span><div className="jcTitle"><p className="jcKind">Education</p><h3>B.Tech, Computer Science</h3><p className="jcOrg">Jaypee University of Information Technology <i>·</i> Solan, India</p></div><span className="jcDate">2021 — 2025</span></div>
+          <p className="jcDetail">Relevant coursework spanned AI and machine learning alongside the core computer science foundations.</p>
+          <div className="jcFoot"><div className="jcStats"><div><b>7.8<small>/10</small></b><span>CGPA</span></div></div><ul className="jcChips"><li>Data Structures &amp; Algorithms</li><li>OOP</li><li>Operating Systems</li><li>DBMS</li><li>Computer Networks</li><li>AI &amp; Machine Learning</li></ul></div>
+         </article>
+        </li>
+       </ol>
+      </div>
+    </section>
     <section className="contact" id="contact"><div className="contactGrid reveal">
       <div className="contactIntro"><p className="eyebrow">Get in touch</p><h2>Let’s talk.</h2><p>Have a role, project or question? Send me a note and I’ll get back to you.</p><div className="contactRoutes"><a href="mailto:shobhitg947@gmail.com"><BrandIcon icon={siGmail}/><span><b>Mail</b>shobhitg947@gmail.com</span><i>↗</i></a><a href="https://github.com/shobhit26-09" target="_blank" rel="noreferrer"><BrandIcon icon={siGithub}/><span><b>GitHub</b>shobhit26-09</span><i>↗</i></a><a href="https://www.linkedin.com/in/shobhit-gupta-867b12223/" target="_blank" rel="noreferrer"><BrandIcon icon={linkedIn}/><span><b>LinkedIn</b>shobhit-gupta</span><i>↗</i></a><a href="https://leetcode.com/u/shobhitg947" target="_blank" rel="noreferrer"><BrandIcon icon={siLeetcode}/><span><b>LeetCode</b>shobhitg947</span><i>↗</i></a><a href="/Shobhit_Resume.pdf" target="_blank" rel="noreferrer"><BrandIcon icon={resumeIcon}/><span><b>Resume</b>View PDF</span><i>↗</i></a></div></div>
       {formSent?<div className="formSuccess" role="status"><b>Message sent.</b><p>Thanks — it’s on its way to Shobhit.</p><button onClick={()=>setFormSent(false)}>Send another</button></div>:<form className="messageForm" name="portfolio-contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?message=sent#contact" onSubmit={()=>setFormSent(true)}><input type="hidden" name="form-name" value="portfolio-contact"/><p className="hiddenField"><label>Don’t fill this out: <input name="bot-field"/></label></p><label>Your email<input type="email" name="email" autoComplete="email" placeholder="you@company.com" required/></label><label>Subject<input name="subject" placeholder="Role, project or question" required/></label><label>Message<textarea name="message" rows={6} placeholder="Tell me what you’re working on…" required/></label><button type="submit">Send message <span>↗</span></button></form>}
