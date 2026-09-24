@@ -110,14 +110,14 @@ export default function App(){
          <article className="journeyCard">
           <div className="jcTop"><span className="orgLogo orgDark"><img src={outlierLogo} alt="Outlier logo"/></span><div className="jcTitle"><p className="jcKind">Experience</p><h3>Software Developer (Contractor)</h3><p className="jcOrg">Outlier <i>·</i> Remote</p></div><span className="jcDate">Jun 2025 — Dec 2025</span></div>
           <p className="jcDetail">Built UI components, site templates and code used to train and evaluate AI systems. Every project had a strict completion window, and all were accepted and paid.</p>
-          <div className="jcFoot"><div className="jcStats"><div><b>~11</b><span>projects delivered</span></div><div><b>6 mo</b><span>contract</span></div></div><ul className="jcChips"><li>React</li><li>TypeScript</li><li>JavaScript</li><li>HTML</li><li>CSS</li></ul></div>
+          <div className="jcFoot"><div className="jcStats"><div><b>~11</b><span>projects delivered</span></div></div><ul className="jcChips"><li>React</li><li>TypeScript</li><li>JavaScript</li><li>HTML</li><li>CSS</li></ul></div>
          </article>
         </li>
         <li className="journeyItem reveal"><span className="journeyNode" aria-hidden="true"/>
          <article className="journeyCard">
           <div className="jcTop"><span className="orgLogo orgCrest"><img src={juitLogo} alt="Jaypee University of Information Technology logo"/></span><div className="jcTitle"><p className="jcKind">Education</p><h3>B.Tech, Computer Science</h3><p className="jcOrg">Jaypee University of Information Technology <i>·</i> Solan, India</p></div><span className="jcDate">2021 — 2025</span></div>
           <p className="jcDetail">Relevant coursework spanned AI and machine learning alongside the core computer science foundations.</p>
-          <div className="jcFoot"><div className="jcStats"><div><b>7.8<small>/10</small></b><span>CGPA</span></div></div><ul className="jcChips"><li>Data Structures &amp; Algorithms</li><li>OOP</li><li>Operating Systems</li><li>DBMS</li><li>Computer Networks</li><li>AI &amp; Machine Learning</li></ul></div>
+          <div className="jcFoot jcFootChips"><ul className="jcChips"><li>DSA</li><li>OOP</li><li>Operating Systems</li><li>DBMS</li><li>Computer Networks</li><li>AI &amp; ML</li></ul></div>
          </article>
         </li>
        </ol>
