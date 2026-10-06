@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import ssHome from './shots/ss-home.webp';
 import ssMacro from './shots/ss-macro.webp';
 import ssSectors from './shots/ss-sectors.webp';
-import blSignin from './shots/bl-signin.webp';
-import blLobby from './shots/bl-lobby.webp';
+import scoutHome from './shots/scout-home.webp';
+import scoutReport from './shots/scout-report.webp';
+import scoutFixes from './shots/scout-fixes.webp';
 import raHome from './shots/ra-home.webp';
 import raTemplates from './shots/ra-templates.webp';
 import raFeatures from './shots/ra-features.webp';
@@ -26,8 +27,8 @@ function Skill({icon,label}:{icon:Brand,label:string}){return <span className="s
 
 const projects = [
   { n:'01', title:'StockSense', kind:'Market intelligence', copy:'A focused Indian equities workspace for signals, sectors, macro context and sourced market news.', stack:['React','TypeScript','Supabase'], views:[{src:ssHome,label:'Dashboard'},{src:ssMacro,label:'World macro map'},{src:ssSectors,label:'Sector ideas'}], live:'https://stocksensee.netlify.app/', code:'https://github.com/shobhit26-09/StockSense' },
-  { n:'02', title:'Bluff', kind:'Real-time multiplayer', copy:'A live card game built around deception, private rooms and synchronized play across connected clients.', stack:['React','Express','Socket.IO','PostgreSQL'], views:[{src:blSignin,label:'Landing & sign-in'},{src:blLobby,label:'Game lobby'}], live:'https://bluff-82py.onrender.com/', code:'https://github.com/shobhit26-09/bluff' },
-  { n:'03', title:'ResumeAI', kind:'AI resume builder', copy:'A TypeScript resume builder and analyzer for creating ATS-aware resumes with guided feedback and intelligent suggestions.', stack:['React','TypeScript','Tailwind','Clerk'], views:[{src:raHome,label:'Home'},{src:raTemplates,label:'Template editor'},{src:raFeatures,label:'Features'}], live:'https://resumeai2.netlify.app/', code:'https://github.com/shobhit26-09/ResumeAI' },
+  { n:'02', title:'Scout', kind:'Website health audits', copy:'Paste a URL for a website health report across SEO, security, accessibility, performance and more. Severity-rated fixes, shareable reports and audit history make it easy to track what changed.', stack:['JavaScript','Node.js','Express','Supabase','Render'], views:[{src:scoutHome,label:'Home'},{src:scoutReport,label:'Audit report'},{src:scoutFixes,label:'Fixes & score changes'}], live:'https://scout-kdty.onrender.com/', code:'https://github.com/shobhit26-09/scout' },
+  { n:'03', title:'ResumeAI', kind:'Resume builder & ATS check', copy:'A private resume workspace with a live preview, browser autosave and real text PDF export. Transparent, on-device ATS checks explain every point without uploading your resume.', stack:['React','TypeScript','Tailwind'], views:[{src:raHome,label:'Home'},{src:raTemplates,label:'Template editor'},{src:raFeatures,label:'Templates'}], live:'https://resumeai2.netlify.app/', code:'https://github.com/shobhit26-09/ResumeAI' },
 ];
 
 type Project = typeof projects[number];
