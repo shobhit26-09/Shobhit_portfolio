@@ -60,6 +60,24 @@ function CaseStudy({p}:{p:Project}){
 export default function App(){
  const [portraitColor,setPortraitColor]=useState(false);
  const [formSent,setFormSent]=useState(false);
+ const [formError,setFormError]=useState('');
+ const [formSubmitting,setFormSubmitting]=useState(false);
+ const submitForm=async(event:React.FormEvent<HTMLFormElement>)=>{
+  event.preventDefault();
+  const form=event.currentTarget;
+  setFormError('');
+  setFormSubmitting(true);
+  try{
+   const response=await fetch('https://formsubmit.co/ajax/shobhitg947@gmail.com',{method:'POST',body:new FormData(form),headers:{Accept:'application/json'}});
+   const result=await response.json();
+   if(!response.ok||!result.success)throw new Error('Submission failed');
+   setFormSent(true);
+  }catch{
+   setFormError('Your message could not be sent. Please email me directly instead.');
+  }finally{
+   setFormSubmitting(false);
+  }
+ };
  const [dark,setDark]=useState(()=>window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false);
  useEffect(()=>{
   const els=[...document.querySelectorAll('.reveal')];
@@ -126,7 +144,7 @@ export default function App(){
     </section>
     <section className="contact" id="contact"><div className="contactGrid reveal">
       <div className="contactIntro"><p className="eyebrow">Get in touch</p><h2>Let’s talk.</h2><p>Have a role, project or question? Send me a note and I’ll get back to you.</p><div className="contactRoutes"><a href="mailto:shobhitg947@gmail.com"><BrandIcon icon={siGmail}/><span><b>Mail</b>shobhitg947@gmail.com</span><i>↗</i></a><a href="https://github.com/shobhit26-09" target="_blank" rel="noreferrer"><BrandIcon icon={siGithub}/><span><b>GitHub</b>shobhit26-09</span><i>↗</i></a><a href="https://www.linkedin.com/in/shobhit-gupta-867b12223/" target="_blank" rel="noreferrer"><BrandIcon icon={linkedIn}/><span><b>LinkedIn</b>shobhit-gupta</span><i>↗</i></a><a href="https://leetcode.com/u/shobhitg947" target="_blank" rel="noreferrer"><BrandIcon icon={siLeetcode}/><span><b>LeetCode</b>shobhitg947</span><i>↗</i></a><a href="/Shobhit_Resume.pdf" target="_blank" rel="noreferrer"><BrandIcon icon={resumeIcon}/><span><b>Resume</b>View PDF</span><i>↗</i></a></div></div>
-      {formSent?<div className="formSuccess" role="status"><b>Message sent.</b><p>Thanks — it’s on its way to Shobhit.</p><button onClick={()=>setFormSent(false)}>Send another</button></div>:<form className="messageForm" name="portfolio-contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?message=sent#contact" onSubmit={()=>setFormSent(true)}><input type="hidden" name="form-name" value="portfolio-contact"/><p className="hiddenField"><label>Don’t fill this out: <input name="bot-field"/></label></p><label>Your email<input type="email" name="email" autoComplete="email" placeholder="you@company.com" required/></label><label>Subject<input name="subject" placeholder="Role, project or question" required/></label><label>Message<textarea name="message" rows={6} placeholder="Tell me what you’re working on…" required/></label><button type="submit">Send message <span>↗</span></button></form>}
+      {formSent?<div className="formSuccess" role="status"><b>Message sent.</b><p>Thanks — it’s on its way to Shobhit.</p><button onClick={()=>setFormSent(false)}>Send another</button></div>:<form className="messageForm" name="portfolio-contact" onSubmit={submitForm}><input type="hidden" name="_template" value="table"/><input type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hiddenField"/><label>Your email<input type="email" name="email" autoComplete="email" placeholder="you@company.com" required/></label><label>Subject<input type="text" name="subject" placeholder="Role, project or question" required/></label><label>Message<textarea name="message" rows={6} placeholder="Tell me what you’re working on…" required/></label>{formError&&<p className="formError" role="alert">{formError}</p>}<button type="submit" disabled={formSubmitting}>{formSubmitting?'Sending…':<>Send message <span>↗</span></>}</button></form>}
     </div></section>
    </main><footer><span>© 2026 Shobhit Gupta</span><a href="#top">Back to top ↑</a></footer>
   </div>
