@@ -81,14 +81,20 @@ export default function App(){
  };
  const [dark,setDark]=useState(false);
  // Layout effect: keep React's theme state in line with the system theme before the first paint after hydration.
- useIsoLayoutEffect(()=>{if(window.matchMedia?.('(prefers-color-scheme: dark)').matches===true)setDark(true)},[]);
+ useIsoLayoutEffect(()=>{
+  if(window.matchMedia?.('(prefers-color-scheme: dark)').matches===true)setDark(true);
+  // Prerendered text is visible by default. Reveal animations only start once the client is running:
+  // anything already on screen stays visible, the rest waits for the observer below.
+  document.querySelectorAll('.reveal').forEach(e=>{const r=e.getBoundingClientRect();if(r.top<window.innerHeight&&r.bottom>0)e.classList.add('in')});
+  document.documentElement.classList.add('js-ready');
+ },[]);
  useEffect(()=>{
   const els=[...document.querySelectorAll('.reveal')];
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12}); els.forEach(e=>io.observe(e));
   const move=()=>document.documentElement.style.setProperty('--sy',String(window.scrollY)); window.addEventListener('scroll',move,{passive:true}); move();
   return()=>{io.disconnect();window.removeEventListener('scroll',move)};
  },[]);
- return <div className={'portfolio '+(dark?'dark':'light')}>
+ return <div className={'portfolio '+(dark?'dark':'light')} suppressHydrationWarning>
    <header className="topbar"><a className="mark" href="#top" aria-label="Home">SG<span>.</span></a><nav><button className="themeToggle" onClick={()=>setDark(v=>!v)} aria-label={`Switch to ${dark?'light':'dark'} mode`}><span>{dark?'☾':'☀'}</span><i/></button><a href="#work">Work</a><a href="#skills">Skills</a><a href="#about">About</a><a className="availability" href="mailto:shobhitg947@gmail.com"><i/>Available for work</a></nav></header>
    <main id="top">
     <section className="hero heroEditorial">
