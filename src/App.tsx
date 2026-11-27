@@ -80,8 +80,8 @@ export default function App(){
   }
  };
  const [dark,setDark]=useState(false);
- // Layout effect: apply the system theme before the first paint after hydration, then reveal the page.
- useIsoLayoutEffect(()=>{if(window.matchMedia?.('(prefers-color-scheme: dark)').matches===true)setDark(true);document.getElementById('pre-dark')?.remove()},[]);
+ // Layout effect: keep React's theme state in line with the system theme before the first paint after hydration.
+ useIsoLayoutEffect(()=>{if(window.matchMedia?.('(prefers-color-scheme: dark)').matches===true)setDark(true)},[]);
  useEffect(()=>{
   const els=[...document.querySelectorAll('.reveal')];
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12}); els.forEach(e=>io.observe(e));
