@@ -18,6 +18,14 @@
     <meta name="robots" content="index, follow" />
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Shobhit Gupta","url":"https://shobhitgupta.netlify.app/","sameAs":["https://github.com/shobhit26-09","https://www.linkedin.com/in/shobhitgupta26/","https://leetcode.com/u/shobhitg947"],"jobTitle":"Full-stack Developer"}</script>
     <script data-goatcounter="https://shobhitgupta.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+    <script>
+      // Dark-mode visitors: keep the light prerendered markup hidden until the app hydrates and applies the theme.
+      if (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.write('<style id="pre-dark">html,body{background:#11130f !important}#root{visibility:hidden !important}</style>');
+        // Safety net: never leave the page hidden if the script fails to load.
+        setTimeout(function () { var s = document.getElementById('pre-dark'); if (s) s.remove(); }, 4000);
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
