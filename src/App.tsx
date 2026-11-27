@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import ssHome from './shots/ss-home.webp';
 import ssMacro from './shots/ss-macro.webp';
 import ssSectors from './shots/ss-sectors.webp';
@@ -56,6 +56,8 @@ function CaseStudy({p}:{p:Project}){
  </article>
 }
 
+const useIsoLayoutEffect = typeof window!=='undefined' ? useLayoutEffect : useEffect;
+
 export default function App(){
  const [portraitColor,setPortraitColor]=useState(false);
  const [formSent,setFormSent]=useState(false);
@@ -77,18 +79,26 @@ export default function App(){
    setFormSubmitting(false);
   }
  };
- const [dark,setDark]=useState(()=>window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false);
+ const [dark,setDark]=useState(false);
+ // Layout effect: keep React's theme state in line with the system theme before the first paint after hydration.
+ useIsoLayoutEffect(()=>{
+  if(window.matchMedia?.('(prefers-color-scheme: dark)').matches===true)setDark(true);
+  // Prerendered text is visible by default. Reveal animations only start once the client is running:
+  // anything already on screen stays visible, the rest waits for the observer below.
+  document.querySelectorAll('.reveal').forEach(e=>{const r=e.getBoundingClientRect();if(r.top<window.innerHeight&&r.bottom>0)e.classList.add('in')});
+  document.documentElement.classList.add('js-ready');
+ },[]);
  useEffect(()=>{
   const els=[...document.querySelectorAll('.reveal')];
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12}); els.forEach(e=>io.observe(e));
   const move=()=>document.documentElement.style.setProperty('--sy',String(window.scrollY)); window.addEventListener('scroll',move,{passive:true}); move();
   return()=>{io.disconnect();window.removeEventListener('scroll',move)};
  },[]);
- return <div className={'portfolio '+(dark?'dark':'light')}>
+ return <div className={'portfolio '+(dark?'dark':'light')} suppressHydrationWarning>
    <header className="topbar"><a className="mark" href="#top" aria-label="Home">SG<span>.</span></a><nav><button className="themeToggle" onClick={()=>setDark(v=>!v)} aria-label={`Switch to ${dark?'light':'dark'} mode`}><span>{dark?'☾':'☀'}</span><i/></button><a href="#work">Work</a><a href="#skills">Skills</a><a href="#about">About</a><a className="availability" href="mailto:shobhitg947@gmail.com"><i/>Available for work</a></nav></header>
    <main id="top">
     <section className="hero heroEditorial">
-      <p className="eyebrow reveal">Full-stack developer · India</p>
+      <p className="eyebrow reveal">Shobhit Gupta · Full-stack developer · India</p>
       <div className="heroCanvas">
        <h1 className="heroDisplay reveal"><span className="displayLine lineOne">I make the interface</span><span className="displayLine lineTwo">make <em>sense.</em></span></h1>
        <p className="heroBio bioOne">I’m Shobhit Gupta, a frontend-strong full-stack developer based in India.</p>
@@ -142,7 +152,7 @@ export default function App(){
       </div>
     </section>
     <section className="contact" id="contact"><div className="contactGrid reveal">
-      <div className="contactIntro"><p className="eyebrow">Get in touch</p><h2>Let’s talk.</h2><p>Have a role, project or question? Send me a note and I’ll get back to you.</p><div className="contactRoutes"><a href="mailto:shobhitg947@gmail.com"><BrandIcon icon={siGmail}/><span><b>Mail</b>shobhitg947@gmail.com</span><i>↗</i></a><a href="https://github.com/shobhit26-09" target="_blank" rel="noreferrer"><BrandIcon icon={siGithub}/><span><b>GitHub</b>shobhit26-09</span><i>↗</i></a><a href="https://www.linkedin.com/in/shobhit-gupta-867b12223/" target="_blank" rel="noreferrer"><BrandIcon icon={linkedIn}/><span><b>LinkedIn</b>shobhit-gupta</span><i>↗</i></a><a href="https://leetcode.com/u/shobhitg947" target="_blank" rel="noreferrer"><BrandIcon icon={siLeetcode}/><span><b>LeetCode</b>shobhitg947</span><i>↗</i></a></div></div>
+      <div className="contactIntro"><p className="eyebrow">Get in touch</p><h2>Let’s talk.</h2><p>Have a role, project or question? Send me a note and I’ll get back to you.</p><div className="contactRoutes"><a href="mailto:shobhitg947@gmail.com"><BrandIcon icon={siGmail}/><span><b>Mail</b>shobhitg947@gmail.com</span><i>↗</i></a><a href="https://github.com/shobhit26-09" target="_blank" rel="noreferrer"><BrandIcon icon={siGithub}/><span><b>GitHub</b>shobhit26-09</span><i>↗</i></a><a href="https://www.linkedin.com/in/shobhitgupta26/" target="_blank" rel="noreferrer"><BrandIcon icon={linkedIn}/><span><b>LinkedIn</b>shobhit-gupta</span><i>↗</i></a><a href="https://leetcode.com/u/shobhitg947" target="_blank" rel="noreferrer"><BrandIcon icon={siLeetcode}/><span><b>LeetCode</b>shobhitg947</span><i>↗</i></a></div></div>
       {formSent?<div className="formSuccess" role="status"><b>Message sent.</b><p>Thanks — it’s on its way to Shobhit.</p><button onClick={()=>setFormSent(false)}>Send another</button></div>:<form className="messageForm" name="portfolio-contact" onSubmit={submitForm}><input type="hidden" name="_template" value="table"/><input type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hiddenField"/><label>Your email<input type="email" name="email" autoComplete="email" placeholder="you@company.com" required/></label><label>Subject<input type="text" name="subject" placeholder="Role, project or question" required/></label><label>Message<textarea name="message" rows={6} placeholder="Tell me what you’re working on…" required/></label>{formError&&<p className="formError" role="alert">{formError}</p>}<button type="submit" disabled={formSubmitting}>{formSubmitting?'Sending…':<>Send message <span>↗</span></>}</button></form>}
     </div></section>
    </main><footer><span>© 2026 Shobhit Gupta</span><a href="#top">Back to top ↑</a></footer>

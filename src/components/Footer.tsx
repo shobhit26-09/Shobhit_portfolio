@@ -58,7 +58,7 @@ const Footer = () => {
             <div className="flex gap-5">
               {[
                 { href: 'https://github.com/shobhit26-09', icon: <Github size={26} />, bg: 'bg-white text-black', label: 'Github' },
-                { href: 'https://www.linkedin.com/in/shobhit-gupta-867b12223/', icon: <Linkedin size={26} />, bg: 'bg-[#0077B5] text-white', label: 'LinkedIn' },
+                { href: 'https://www.linkedin.com/in/shobhitgupta26/', icon: <Linkedin size={26} />, bg: 'bg-[#0077B5] text-white', label: 'LinkedIn' },
                 { href: 'https://x.com/Shobhit_guptaa_', icon: <FaXTwitter size={26} />, bg: 'bg-black text-white', label: 'X' },
                 { href: 'mailto:shobhitg947@gmail.com', icon: <Mail size={26} />, bg: 'bg-[#EA4335] text-white', label: 'Email' },
               ].map(({ href, icon, bg, label }, index) => (
