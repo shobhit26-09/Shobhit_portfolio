@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import ssHome from './shots/ss-home.webp';
 import ssMacro from './shots/ss-macro.webp';
 import ssSectors from './shots/ss-sectors.webp';
@@ -56,6 +56,8 @@ function CaseStudy({p}:{p:Project}){
  </article>
 }
 
+const useIsoLayoutEffect = typeof window!=='undefined' ? useLayoutEffect : useEffect;
+
 export default function App(){
  const [portraitColor,setPortraitColor]=useState(false);
  const [formSent,setFormSent]=useState(false);
@@ -78,7 +80,8 @@ export default function App(){
   }
  };
  const [dark,setDark]=useState(false);
- useEffect(()=>{setDark(window.matchMedia?.('(prefers-color-scheme: dark)').matches === true)},[]);
+ // Layout effect: apply the system theme before the first paint after hydration, then reveal the page.
+ useIsoLayoutEffect(()=>{if(window.matchMedia?.('(prefers-color-scheme: dark)').matches===true)setDark(true);document.getElementById('pre-dark')?.remove()},[]);
  useEffect(()=>{
   const els=[...document.querySelectorAll('.reveal')];
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12}); els.forEach(e=>io.observe(e));
